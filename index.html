@@ -38,6 +38,7 @@
             $('#bing').attr('src', 'http://cn.bing.com/search?q=' + value);
             $('#csdn').attr('src', 'http://so.csdn.net/so/search/s.do?q=' + value);
             $('#36kr').attr('src', 'http://36kr.com/search/articles/' + value);
+            $('#cnblogs').attr('src', 'http://zzk.cnblogs.com/s?t=b&w=' + value);
         }
     </script>
 </head>
@@ -70,6 +71,11 @@
 	        <!-- 36氪 -->
             <div title="36Kr" data-options="closable:false" style="padding:0px;">
                 <iframe id='36kr' frameborder="0" src="http://36kr.com/" scrolling="auto" style="width:100%; height:100%; overflow:hidden; margin:auto"></iframe>
+            </div>
+            
+	        <!-- 博客园 -->
+            <div title="博客园" data-options="closable:false" style="padding:0px;">
+                <iframe id='cnblogs' frameborder="0" src="http://www.cnblogs.com/" scrolling="auto" style="width:100%; height:100%; overflow:hidden; margin:auto"></iframe>
             </div>
         </div>
     </div>
