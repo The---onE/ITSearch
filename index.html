@@ -18,12 +18,13 @@
     <script>
         var history = [];
         var count = 0;
-        var index = 0;
+        var index = -1;
+        history[-1] = '';
 
         $(function () {
             $('#prev').click(function () {
                 if (count > 0) {
-                    index = index > 0 ? index - 1 : 0;
+                    index = index > -1 ? index - 1 : -1;
                     searchInFrame(history[index]);
                 }
             });
@@ -51,18 +52,32 @@
         }
 
         function searchWebsite(value, name) {
-            history[count] = value;
-            index = count;
-            count++;
+            index++;
+            count = index + 1;
+            history[index] = value;
             searchInFrame(value);
         }
 
         function searchInFrame(value) {
-            $('#bing').attr('src', 'http://cn.bing.com/search?q=' + value);
-            $('#csdn').attr('src', 'http://so.csdn.net/so/search/s.do?q=' + value);
-            $('#36kr').attr('src', 'http://36kr.com/search/articles/' + value);
-            $('#cnblogs').attr('src', 'http://zzk.cnblogs.com/s?t=b&w=' + value);
-            if (index <= 0) {
+            if (index != -1) {
+                $('#search').searchbox({
+                    value: value
+                });
+                $('#bing').attr('src', 'http://cn.bing.com/search?q=' + value);
+                $('#csdn').attr('src', 'http://so.csdn.net/so/search/s.do?q=' + value);
+                $('#36kr').attr('src', 'http://36kr.com/search/articles/' + value);
+                $('#cnblogs').attr('src', 'http://zzk.cnblogs.com/s?t=b&w=' + value);
+            } else {
+                $('#search').searchbox({
+                    value: ''
+                });
+                $('#bing').attr('src', 'http://www.bing.com/');
+                $('#csdn').attr('src', 'http://www.csdn.net/');
+                $('#36kr').attr('src', 'http://36kr.com/');
+                $('#cnblogs').attr('src', 'http://www.cnblogs.com/');
+            }
+
+            if (index <= -1) {
                 $('#prev').linkbutton({
                     disabled: true
                 });
