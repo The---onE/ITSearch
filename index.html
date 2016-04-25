@@ -22,24 +22,26 @@
         history[-1] = '';
 
         $(function () {
-            $('#prev').click(function () {
-                if (count > 0) {
-                    index = index > -1 ? index - 1 : -1;
-                    searchInFrame(history[index]);
-                }
-            });
 
-            $('#next').click(function () {
-                if (count > 0) {
-                    index = index < count - 1 ? index + 1 : count - 1;
-                    searchInFrame(history[index]);
-                }
-            });
         })
+
+        function prev() {
+            if (count > 0) {
+                index = index > -1 ? index - 1 : -1;
+                searchInFrame(history[index]);
+            }
+        }
+
+        function next() {
+            if (count > 0) {
+                index = index < count - 1 ? index + 1 : count - 1;
+                searchInFrame(history[index]);
+            }
+        }
 
         function openWebsite(value, name) {
             var url = value
-            var re = /https?:\/\/.+/i
+            var re = /^https?:\/\/.+$/i
             if (value.search(re) == -1) {
                 url = "http://" + value;
             }
@@ -59,7 +61,7 @@
         }
 
         function searchInFrame(value) {
-            if (index != -1) {
+            if (index != -1 && value != '') {
                 $('#search').searchbox({
                     value: value
                 });
@@ -103,11 +105,11 @@
     <!-- 顶部面板 -->
     <div data-options="region:'north', split:false" style="height: 35px;">
         <input id="website" class="easyui-searchbox" style="height: 32px; width: 500px"
-            data-options="searcher:openWebsite, prompt:'打开新网页'" />
+               data-options="searcher:openWebsite, prompt:'打开新网页'" />
         <input id="search" class="easyui-searchbox" style="height: 32px; width: 500px"
-            data-options="searcher:searchWebsite, prompt:'请输入要搜索的内容'" />
-        <a id="prev" class="easyui-linkbutton" data-options="disabled:true, text:'←'"></a>
-        <a id="next" class="easyui-linkbutton" data-options="disabled:true, text:'→'"></a>
+               data-options="searcher:searchWebsite, prompt:'请输入要搜索的内容'" />
+        <a id="prev" class="easyui-linkbutton" data-options="disabled:true, text:'←', onClick:prev"></a>
+        <a id="next" class="easyui-linkbutton" data-options="disabled:true, text:'→', onClick:next"></a>
     </div>
     <!-- 右侧面板 -->
     <div data-options="region:'east',title:'记事板',split:true, collapsed:true" style="width: 200px;">
