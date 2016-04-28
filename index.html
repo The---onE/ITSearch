@@ -59,6 +59,25 @@
             },
         ]
 
+        urls = [
+            {
+                title: '知乎',
+                url: 'http://www.zhihu.com/'
+            },
+            {
+                title: '谷歌搜索',
+                url: 'https://www.google.com/'
+            },
+            {
+                title: '谷歌翻译',
+                url: 'http://translate.google.cn/'
+            },
+            {
+                title: 'Stack Overflow',
+                url: 'http://stackoverflow.com/'
+            },
+        ]
+
         $(function () {
             $.each(datas, function (key, value) {
                 $('#tt').tabs('add', {
@@ -68,6 +87,11 @@
                 });
             })
             $('#tt').tabs('select', 0);
+
+            $.each(urls, function (key, value) {
+                var a = $('<p style="text-align:center"><a target="_blank" href="' + value.url + '">' + value.title + '</a></p>');
+                $('#link').append(a);
+            })
         })
 
         function prev() {
@@ -153,6 +177,9 @@
             data-options="searcher:searchWebsite, prompt:'请输入要搜索的内容'" />
         <a id="prev" class="easyui-linkbutton" data-options="disabled:true, text:'←', onClick:prev"></a>
         <a id="next" class="easyui-linkbutton" data-options="disabled:true, text:'→', onClick:next"></a>
+    </div>
+    <!-- 左侧面板 -->
+    <div data-options="region:'west',title:'常用链接',split:true, collapsed:true" id="link" style="width: 200px;">
     </div>
     <!-- 右侧面板 -->
     <div data-options="region:'east',title:'记事板',split:true, collapsed:true" style="width: 200px;">
