@@ -78,7 +78,7 @@
             },
         ]
 
-        katakana = [
+        hiragana = [
             ['あ', 'い', 'う', 'え', 'お'],
             ['か', 'き', 'く', 'け', 'こ'],
             ['さ', 'し', 'す', 'せ', 'そ'],
@@ -89,7 +89,21 @@
             ['や', 'い', 'ゆ', 'え', 'よ'],
             ['ら', 'り', 'る', 'れ', 'ろ'],
             ['わ', 'ゐ', 'う', 'ゑ', 'を'],
-            ['ん', 'ゃ', 'ゅ', 'ょ', '々'],
+            ['ゃ', 'ん', 'ゅ', '々', 'ょ'],
+        ]
+
+        katakana = [
+            ['ア', 'イ', 'ウ', 'エ', 'オ'],
+            ['カ', 'キ', 'ク', 'ケ', 'コ'],
+            ['サ', 'シ', 'ス', 'セ', 'ソ'],
+            ['タ', 'チ', 'ツ', 'テ', 'ト'],
+            ['ナ', 'ニ', 'ヌ', 'ネ', 'ノ'],
+            ['ハ', 'ヒ', 'フ', 'ヘ', 'ホ'],
+            ['マ', 'ミ', 'ム', 'メ', 'モ'],
+            ['ヤ', 'イ', 'ユ', 'エ', 'ヨ'],
+            ['ラ', 'リ', 'ル', 'レ', 'ロ'],
+            ['ワ', 'ヰ', 'ウ', 'ヱ', 'ヲ'],
+            ['ャ', 'ン', 'ュ', 'ー', 'ョ'],
         ]
 
         $(function () {
@@ -106,15 +120,37 @@
                 var a = $('<p style="text-align:center"><a target="_blank" href="' + value.url + '">' + value.title + '</a></p>');
                 $('#link').append(a);
             })
+            
+            var div = $('<div></div>')
+            $.each(hiragana, function (key, value) {
+                var p = $('<p></p>');
+                $.each(value, function (k, kana) {
+                    var a = $('<a style="font-size:16px" href="javascript:insertKana(\'' + kana + '\');">' + kana + ' </a>');
+                    p.append(a);
+                })
+                div.append(p);
+            })
+            $('#kana').tabs('add', {
+                title: '平假名',
+                content: div,
+                closable: false
+            })
 
+            var div = $('<div></div>')
             $.each(katakana, function (key, value) {
                 var p = $('<p></p>');
                 $.each(value, function (k, kana) {
-                    var a = $('<a style="font-size:18px" href="javascript:insertKana(\'' + kana + '\');">' + kana + ' </a>');
+                    var a = $('<a style="font-size:16px" href="javascript:insertKana(\'' + kana + '\');">' + kana + ' </a>');
                     p.append(a);
                 })
-                $('#kana').append(p);
+                div.append(p);
             })
+            $('#kana').tabs('add', {
+                title: '片假名',
+                content: div,
+                closable: false
+            })
+            $('#kana').tabs('select', 0);
         })
 
         function insertKana(kana) {
@@ -212,7 +248,8 @@
     <!-- 右侧面板 -->
     <div data-options="region:'east',title:'记事板',split:true, collapsed:true" id="notepad" style="width: 200px;">
         <textarea id="text" style="width: 100%; height: 30%;"></textarea>
-        <div id="kana"></div>
+        <div id="kana" class="easyui-tabs" style="width: 100%; height: 70%;">
+        </div>
     </div>
     <!-- 主面板 -->
     <div data-options="region:'center'" style="padding: 0px;">
