@@ -78,6 +78,20 @@
             },
         ]
 
+        katakana = [
+            ['あ', 'い', 'う', 'え', 'お'],
+            ['か', 'き', 'く', 'け', 'こ'],
+            ['さ', 'し', 'す', 'せ', 'そ'],
+            ['た', 'ち', 'つ', 'て', 'と'],
+            ['な', 'に', 'ぬ', 'ね', 'の'],
+            ['は', 'ひ', 'ふ', 'へ', 'ほ'],
+            ['ま', 'み', 'む', 'め', 'も'],
+            ['や', 'い', 'ゆ', 'え', 'よ'],
+            ['ら', 'り', 'る', 'れ', 'ろ'],
+            ['わ', 'ゐ', 'う', 'ゑ', 'を'],
+            ['ん', 'ゃ', 'ゅ', 'ょ', '々'],
+        ]
+
         $(function () {
             $.each(datas, function (key, value) {
                 $('#tt').tabs('add', {
@@ -92,7 +106,21 @@
                 var a = $('<p style="text-align:center"><a target="_blank" href="' + value.url + '">' + value.title + '</a></p>');
                 $('#link').append(a);
             })
+
+            $.each(katakana, function (key, value) {
+                var p = $('<p></p>');
+                $.each(value, function (k, kana) {
+                    var a = $('<a style="font-size:18px" href="javascript:insertKana(\'' + kana + '\');">' + kana + ' </a>');
+                    p.append(a);
+                })
+                $('#kana').append(p);
+            })
         })
+
+        function insertKana(kana) {
+            $('#text').val($('#text').val() + kana);
+            $('#text').focus();
+        }
 
         function prev() {
             if (count > 0) {
@@ -182,8 +210,9 @@
     <div data-options="region:'west',title:'常用链接',split:true, collapsed:true" id="link" style="width: 200px;">
     </div>
     <!-- 右侧面板 -->
-    <div data-options="region:'east',title:'记事板',split:true, collapsed:true" style="width: 200px;">
-        <textarea style="width: 100%; height: 100%;"></textarea>
+    <div data-options="region:'east',title:'记事板',split:true, collapsed:true" id="notepad" style="width: 200px;">
+        <textarea id="text" style="width: 100%; height: 30%;"></textarea>
+        <div id="kana"></div>
     </div>
     <!-- 主面板 -->
     <div data-options="region:'center'" style="padding: 0px;">
