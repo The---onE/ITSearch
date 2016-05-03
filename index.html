@@ -242,7 +242,8 @@
                     value: value
                 });
                 $.each(datas, function (k, v) {
-                    $('#' + v.id).attr('src', v.search + value);
+                    s = value.replace("%", "%25").replace("+", "%2B").replace("/", "%2F").replace("?", "%3F").replace("#", "%23").replace("&", "%26");
+                    $('#' + v.id).attr('src', v.search + s);
                 })
             } else {
                 $('#search').searchbox({
