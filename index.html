@@ -196,6 +196,34 @@
             }
         });
 
+        $.fn.selection = function () {
+            var s, e, range, stored_range;
+            if (this[0].selectionStart == undefined) {
+                var selection = document.selection;
+                if (this[0].tagName.toLowerCase() != "textarea") {
+                    var val = this.val();
+                    range = selection.createRange().duplicate();
+                    range.moveEnd("character", val.length);
+                    s = (range.text == "" ? val.length : val.lastIndexOf(range.text));
+                    range = selection.createRange().duplicate();
+                    range.moveStart("character", -val.length);
+                    e = range.text.length;
+                } else {
+                    range = selection.createRange(),
+                    stored_range = range.duplicate();
+                    stored_range.moveToElementText(this[0]);
+                    stored_range.setEndPoint('EndToEnd', range);
+                    s = stored_range.text.length - range.text.length;
+                    e = s + range.text.length;
+                }
+            } else {
+                s = this[0].selectionStart,
+                e = this[0].selectionEnd;
+            }
+            var te = this[0].value.substring(s, e);
+            return { start: s, end: e, text: te };
+        };
+
         function insertKana(kana) {
             $('#text').insertContent(kana);
             $('#text').focus();
@@ -274,6 +302,14 @@
                 });
             }
         }
+
+        function searceFromNotepad() {
+            var text = $('#text').selection().text;
+            if (text == '') {
+                text = $('#text').val();
+            }
+            searchWebsite(text, null);
+        }
     </script>
 </head>
 <body class="easyui-layout">
@@ -291,7 +327,8 @@
     </div>
     <!-- 右侧面板 -->
     <div data-options="region:'east',title:'记事板',split:true, collapsed:true" id="notepad" style="width: 260px;">
-        <textarea id="text" style="width: 100%; height: 30%;"></textarea>
+        <textarea id="text" style="width: 100%; height: 25%;"></textarea>
+        <a class="easyui-linkbutton" data-options="text:'搜索', onClick:searceFromNotepad"></a>
         <div id="kana" class="easyui-tabs" style="width: 100%; height: 70%;">
         </div>
     </div>
