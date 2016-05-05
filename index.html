@@ -258,6 +258,10 @@
         }
 
         function searchWebsite(value, name) {
+            if (history[index] == value) {
+                searchInFrame(value);
+                return;
+            }
             index++;
             count = index + 1;
             history[index] = value;
